@@ -1,0 +1,24 @@
+#Export all Layouts ending with "SAM" to pdf with highest quality//Samran Asiabani//
+import arcpy
+import os
+
+# Set the project path
+prjPath = r"Paste Your Project Path Here"
+
+# Create an ArcGIS project object
+p = arcpy.mp.ArcGISProject(prjPath)
+
+# Loop through the layouts in the project
+for lyt in p.listLayouts():
+    # Check if the layout name ends with "(SAM)"
+    if lyt.name.endswith("(SAM)"):
+        # Export the layout to PDF with 600 dpi resolution
+        lyt.exportToPDF(os.path.join(r"C:\Users\Samran\Desktop\out", lyt.name + ".pdf"),
+                        resolution=600,
+                        image_quality='BEST',
+                        compress_vector_graphics=True,
+                        image_compression='ADAPTIVE',
+                        jpeg_compression_quality=100,
+                        embed_fonts=True)
+        # Print a message
+        print(f"Exported {lyt.name} to PDF")
